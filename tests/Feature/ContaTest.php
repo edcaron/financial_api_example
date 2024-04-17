@@ -13,9 +13,16 @@ class ContaTest extends TestCase
 
     public function testGetContaInexistente404(): void
     {
-        $response = $this->get('/api/conta?id=1');
+        $url = '/api/conta?id=1';
+
+        $response = $this->get($url);
 
         $response->assertStatus(404);
+
+        $this->assertThrows(
+            fn () => $this->withoutExceptionHandling()->withoutDeprecationHandling()->get($url),
+            ObjectNotFoundException::class
+        );
     }
 
     public function testGetContaExistente(): void

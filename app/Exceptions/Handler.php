@@ -27,14 +27,12 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->renderable(function (ObjectNotFoundException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response($e->getMessage(), Response::HTTP_NOT_FOUND);
-            }
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         });
 
         $this->renderable(function (SemSaldoException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response($e->getMessage(), Response::HTTP_NOT_FOUND);
+                return response()->json(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
             }
         });
 
@@ -43,7 +41,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Exception $e) {
-            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         });
     }
 }

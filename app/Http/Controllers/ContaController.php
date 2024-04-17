@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Symfony\Component\HttpFoundation\Response;
+use App\Exceptions\ObjectNotFoundException;
 use App\Http\Interfaces\Services\ContaServiceInterface;
 use App\Http\Requests\ShowContaRequest;
 use App\Http\Requests\StoreContaRequest;
@@ -33,7 +33,7 @@ class ContaController extends Controller
         $conta = $this->service->find($data['id']);
 
         if (!$conta) {
-            return response('conta não encontrada')->setStatusCode(404);
+            throw new ObjectNotFoundException("conta não encontrada");
         }
 
         return new ContaResource($conta);

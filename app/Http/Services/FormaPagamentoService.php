@@ -27,7 +27,7 @@ class FormaPagamentoService implements FormaPagamentoServiceInterface
             self::CREDITO => 4,
             self::DEBITO => 3,
             self::PIX => 0,
-            default =>  throw new ObjectNotFoundException("forma de pagamento '{$forma}' desconhecido"),
+            default => throw new ObjectNotFoundException("forma de pagamento '{$forma}' desconhecido"),
         };
     }
 
