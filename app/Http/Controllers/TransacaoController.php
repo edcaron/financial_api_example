@@ -24,14 +24,8 @@ class TransacaoController extends Controller
     {
         $data = $request->all();
 
-        try {
-            $transacao = $this->service->store($data);
+        $transacao = $this->service->store($data);
 
-            return response(new ContaResource($transacao->conta), Response::HTTP_CREATED);
-        } catch (ObjectNotFoundException $e) {
-            return response($e->getMessage(), Response::HTTP_NOT_FOUND);
-        } catch (\Exception $th) {
-            throw $th;
-        }
+        return response(new ContaResource($transacao->conta), Response::HTTP_CREATED);
     }
 }

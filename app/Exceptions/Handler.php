@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +26,18 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (ObjectNotFoundException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response($e->getMessage(), Response::HTTP_NOT_FOUND);
+            }
+        });
+
+        $this->renderable(function (ValidationException $e, Request $request) {
+            return $this->convertValidationExceptionToResponse($e, $request);
+        });
+
+        $this->renderable(function (Exception $e) {
+            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         });
     }
 }
