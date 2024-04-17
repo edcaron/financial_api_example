@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContaController;
+use App\Http\Controllers\TransacaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post("conta", [ContaController::class, "store"])->middleware(['transaction']);
+Route::get("conta", [ContaController::class, "show"]);
+
+Route::post("transacao", [TransacaoController::class, "store"])->middleware(['transaction']);
