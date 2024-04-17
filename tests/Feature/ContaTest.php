@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\DuplicateObjectException;
 use App\Exceptions\ObjectNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -73,7 +74,7 @@ class ContaTest extends TestCase
 
         $this->assertThrows(
             fn () => $this->withoutExceptionHandling()->withoutDeprecationHandling()->post("/api/conta", $conta_data),
-            ObjectNotFoundException::class
+            DuplicateObjectException::class
         );
     }
 }

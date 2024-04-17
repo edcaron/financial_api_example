@@ -84,7 +84,7 @@ class TransacaoTest extends TestCase
 
         $response = $this->post("/api/transacao", $transacao_data);
 
-        $response->assertStatus(500);
+        $response->assertStatus(404);
 
         $this->assertThrows(
             fn () => $this->withoutExceptionHandling()->withoutDeprecationHandling()->post("/api/transacao", $transacao_data),

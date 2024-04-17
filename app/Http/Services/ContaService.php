@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Exceptions\ObjectNotFoundException;
+use App\Exceptions\DuplicateObjectException;
 use App\Exceptions\SemSaldoException;
 use App\Http\Interfaces\Repositories\ContaRepositoryInterface;
 use App\Http\Interfaces\Services\ContaServiceInterface;
@@ -29,7 +29,7 @@ class ContaService implements ContaServiceInterface
         $conta = $this->contaRepository->find($data['conta_id']);
 
         if ($conta) {
-            throw new ObjectNotFoundException("conta '{$data['conta_id']}' já existente");
+            throw new DuplicateObjectException("conta '{$data['conta_id']}' já existente");
         }
 
         $conta = $this->contaRepository->create(
